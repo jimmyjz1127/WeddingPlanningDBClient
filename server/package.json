@@ -1,16 +1,23 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CS3101-P2 Server",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/app.js",
+    "server": "nodemon ./src/app.js",
+    "client": "npm start --prefix ./../client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Jimmy Zhang",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "concurrently": "^8.0.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "nodemon": "^2.0.22"
+    "fs": "^0.0.1-security",
+    "nodemon": "^2.0.22",
+    "path": "^0.12.7"
   }
 }
