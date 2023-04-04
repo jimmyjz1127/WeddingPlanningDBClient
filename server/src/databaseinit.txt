@@ -1,0 +1,113 @@
+------------------------ Procedures & Functions ---------------------
+
+-- Checks whether a table is at capacity or not 
+DELIMITER $$
+CREATE FUNCTION check_table_capacity(table_no INT) RETURNS BOOLEAN 
+BEGIN 
+    DECLARE capacity_count INT;
+    DECLARE capacity_limit INT;
+    SELECT count(*) INTO capacity_count FROM person WHERE person.table_no = table_no;
+    SELECT capacity INTO capacity_limit FROM dinner_table WHERE dinner_table.table_no = table_no;
+    RETURN capacity_count < capacity_limit;
+END $$ 
+DELIMITER;
+
+
+-- proc_add_person as described in specifications 
+DELIMITER $$
+CREATE PROCEDURE proc_add_person(IN full_name VARCHAR(200), IN notes VARCHAR(250), IN invitation_code VARCHAR(100), IN table_no INT)
+BEGIN 
+    DECLARE invitation_count INT;
+    DECLARE table_count INT;
+    DECLARE table_capacity INT;
+    
+    SELECT COUNT(*) INTO invitation_count FROM invitation WHERE invitation.code = invitation_code;
+    SELECT COUNT(*) INTO table_count FROM dinner_table WHERE dinner_table.table_no = table_no;
+
+    IF invitation_count = 0 THEN 
+        INSERT INTO invitation VALUES(UUID(), NULL, NULL);
+    END IF 
+
+    IF table_count = 0 THEN 
+        DECLARE max_table_no INT;
+        SELECT MAX(table_no) INTO max_table_no FROM dinner_table;
+
+        INSERT INTO dinner_table VALUES(max_table_no + 1, 1);
+    END IF 
+END $$ 
+DELIMITER;
+
+---------------------------- Triggers -----------------------------
+
+-- Trigger for checking date_sent is after today 
+DELIMITER $$
+CREATE TRIGGER invitation_date_trigger 
+BEFORE INSERT ON invitation
+FOR EACH ROW 
+BEGIN 
+    IF NOT NEW.date_sent <= NOW() THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid : date_sent must be before today';
+    END IF;
+END $$
+DELIMITER;
+
+-- Trigger for checking table capacity when inserting a new guest 
+DELIMITER $$
+CREATE TRIGGER table_capacity_trigger 
+BEFORE INSERT ON person 
+FOR EACH ROW 
+BEGIN 
+    IF NOT check_table_capacity(NEW.table_no) THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid : table already at max capacity';
+    END IF;
+END $$
+DELIMITER;
+
+---------------------------- Table DDL ------------------------------
+
+CREATE TABLE person(
+    id INT AUTO_INCREMENT NOT NULL,
+    full_name VARCHAR(200) NOT NULL,
+    response INT,
+    notes VARCHAR(250),
+    invitation_code VARCHAR(100) NOT NULL,
+    table_no INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (invitation_code) REFERENCES invitation(code),
+    FOREIGN KEY (table_no) REFERENCES dinner_table(table_no)
+);
+
+CREATE TABLE organiser(
+    person_id INT NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    PRIMARY KEY(person_id),
+    FOREIGN KEY (person_id) REFERENCES person(id)
+);
+
+CREATE TABLE invitation(
+    code VARCHAR(100) NOT NULL,
+    address VARCHAR(200) NOT NULL,
+    date_sent DATE,
+    PRIMARY KEY (code)
+);
+
+CREATE TABLE dinner_table(
+    table_no INT NOT NULL,
+    capacity INT NOT NULL CHECK(capacity > 0),
+    PRIMARY KEY (table_no)
+);
+
+CREATE TABLE dietary_requirement(
+    short_name VARCHAR(100) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    PRIMARY KEY (short_name)
+);
+
+CREATE TABLE guest_diet(
+    person_id INT NOT NULL,
+    dietary_requirement_name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (person_id, dietary_requirement_name),
+    FOREIGN KEY (person_id) REFERENCES person(id),
+    FOREIGN KEY (dietary_requirement_name) REFERENCES dietary_requirement(short_name)
+);
+

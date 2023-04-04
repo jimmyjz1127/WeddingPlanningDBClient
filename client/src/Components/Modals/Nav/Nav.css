@@ -1,0 +1,29 @@
+.nav {
+    height:5rem;
+    width:max-content;
+
+    margin:10px;
+
+    display : flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-msg{
+
+}
+
+a {
+    text-decoration: none;
+}
+
+.link > a > h2 {
+    margin:15px;
+    font-size:1rem;
+    color:black;
+}
+
+.link > a > h2:hover{
+    color:brown;
+}

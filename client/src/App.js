@@ -1,27 +1,53 @@
-import {React} from 'react';
-import {useEffect, useLayoutEffect} from 'react';
-import {useState} from 'react';
+import React from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
+import Axios from 'axios';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
-import logo from './logo.svg';
+
+// Components
+import Home from './Components/Pages/Home/Home';
+import GuestLogin from './Components/Pages/GuestLogin/GuestLogin'
+import OrganiserLogin from './Components/Pages/OrganiserLogin/OrganiserLogin'
+
+// Styling 
 import './App.css';
 
 function App() {
+
+
+  useLayoutEffect(() => {
+    if (localStorage.getItem("loginState") == null) {
+      localStorage.setItem("loginState", 0)
+    }
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route 
+            path='/' 
+            element={
+                      <Home 
+                      />
+                    }
+          />
+          <Route 
+            path='/GuestLogin' 
+            element={
+                      <GuestLogin 
+                      />
+                    }
+          />
+          <Route 
+            path='/OrganiserLogin' 
+            element={
+                      <OrganiserLogin 
+                      />
+                    }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

@@ -1,0 +1,38 @@
+.guest-login-wrapper{
+    height:100%;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.guest-login-modal {
+    height:350px;
+    width:max-content;
+
+    background-color: rgb(188, 218, 228);
+
+    padding:5em;
+    border-radius:10%;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.guest-login-form {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-text{
+    color:black;
+}
+
+
+
+

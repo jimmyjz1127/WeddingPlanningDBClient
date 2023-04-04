@@ -1,0 +1,85 @@
+import React from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
+import Axios from 'axios';
+import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
+
+
+// Styling
+import './Nav.css';
+
+function Nav(props) {
+
+    const {type} = props;
+
+
+    if (type == 0){
+        return (
+            <div className='nav'>
+                <div className='link'>
+                    <Link to={'/GuestLogin'}>
+                        <h2>GUEST LOGIN</h2>
+                    </Link>
+                </div>
+
+                <div className='link'>
+                    <Link to={'/OrganiserLogin'}>
+                        <h2>ORGANISER LOGIN</h2>
+                    </Link>
+                </div>
+
+                <div className='link'>
+                    <Link>
+                        <h2>ABOUT</h2>
+                    </Link>
+                </div>
+            </div>
+        )
+    } else if (type == 1) { // guest nav bar 
+        return (
+            <div className='nav'>
+                <div className='link'>
+                    <Link to={'/'}>
+                        <h2>PERSONAL DETAILS</h2>
+                    </Link>
+                </div>
+
+                <div className='link'>
+                    <Link to={'/'}>
+                        <h2>PLACEHOLDER</h2>
+                    </Link>
+                </div>
+
+                <div className='link'>
+                    <Link>
+                        <h2>ABOUT</h2>
+                    </Link>
+                </div>
+            </div>
+        )
+    } else if (type == 2) { // organiser nav bar
+        return (
+            <div className='nav'>
+                <div className='link'>
+                    <Link to={'/'}>
+                        <h2>PLACEHOLDER</h2>
+                    </Link>
+                </div>
+
+                <div className='link'>
+                    <Link to={'/'}>
+                        <h2>PLACEHOLDER</h2>
+                    </Link>
+                </div>
+
+                <div className='link'>
+                    <Link>
+                        <h2>ABOUT</h2>
+                    </Link>
+                </div>
+            </div>
+        )
+    }
+
+}
+
+export default Nav;
