@@ -63,10 +63,9 @@ const getGuestDiet = (values, callback) => {
     
         pool.query(query, values, (err,res) => {
             if (err){
-                console.log("Error retrieving dietary requirements!");
-                callback(false);
+                callback("Error retrieving dietary requirements!");
             } else {
-                callback(res);
+                callback(null, eval(JSON.stringify(res)));
             }
         })
 }

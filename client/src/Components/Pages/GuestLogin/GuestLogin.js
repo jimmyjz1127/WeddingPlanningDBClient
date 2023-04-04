@@ -21,6 +21,30 @@ function GuestLogin(props) {
 
     const navigate = useNavigate();
 
+    /**
+     * Retrieves the dietary requirements of the user logging in as an array
+     */
+    const getDietaryRequirements = async() => {
+        try {
+            const res = await Axios({
+                method:'POST',
+                withCredentials:true,
+                data:{
+                    id:localStorage.getItem("id")
+                },
+                url:'http://localhost:5000/guestdiet'
+            })
+            let data = res.data;
+            const diet_requirements  = data.map(obj => obj.short_name)
+            localStorage.setItem('diet', diet_requirements);
+        } catch (err) {
+
+        }
+    }
+
+    /**
+     * Sends user data to backend for validation - request sends all user data in response
+     */
     const submitGuest = async () => {
         // Sanitize Inputs
         if (code == null|| firstname == null|| lastname == null){
@@ -32,9 +56,9 @@ function GuestLogin(props) {
                     method: "POST",
                     withCredentials: true,
                     data:{
-                        code:code,
-                        firstname:firstname,
-                        lastname:lastname
+                        code:code.trim(),
+                        firstname:firstname.trim(),
+                        lastname:lastname.trim()
                     },
                     url : 'http://localhost:5000/guestlogin'
                 })
@@ -50,6 +74,7 @@ function GuestLogin(props) {
                 localStorage.setItem("notes", data.notes);
                 localStorage.setItem("table_no", data.table_no);
                 localStorage.setItem("loginState", 1);
+                await getDietaryRequirements();
                 navigate('/');
             } catch (err) {
                 setShowError(1);    

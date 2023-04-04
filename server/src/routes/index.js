@@ -19,7 +19,9 @@ router.use(cors({
 // router.use(cors());
 
 
-
+/**
+ * Route for handling guest login 
+ */
 router.post("/guestlogin", async (req, res) => {
     console.log("POST /guestlogin")
 
@@ -38,6 +40,9 @@ router.post("/guestlogin", async (req, res) => {
     }
 })
 
+/**
+ * Route for handling organiser login 
+ */
 router.post('/organiserlogin', async (req, res) => {
     console.log("POST /organiserlogin");
 
@@ -45,6 +50,27 @@ router.post('/organiserlogin', async (req, res) => {
 
     try {
         db.validateOrganiser([firstname, lastname, code, password], async (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Invalid Credentials");
+            } else {
+                res.status(200).json(result);
+            }
+        })
+    } catch (err) {
+
+    }
+})
+
+/**
+ * Handles retrieving a individual guest's diet requirements
+ */
+router.post('/guestdiet', async (req,res) => {
+    const {id} = req.body;
+
+    try {
+        // Query the database
+        db.getGuestDiet([id], async(err, result) => {
             if (err) {
                 console.log(err);
                 res.status(500).send("Invalid Credentials");

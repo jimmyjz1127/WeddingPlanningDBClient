@@ -14,42 +14,47 @@ import './App.css';
 
 function App() {
 
+  const [render, setRender] = useState(0);
 
   useLayoutEffect(() => {
     if (localStorage.getItem("loginState") == null) {
       localStorage.setItem("loginState", 0)
     }
-  })
+    setRender(1);
+  }, [])
 
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route 
-            path='/' 
-            element={
-                      <Home 
-                      />
-                    }
-          />
-          <Route 
-            path='/GuestLogin' 
-            element={
-                      <GuestLogin 
-                      />
-                    }
-          />
-          <Route 
-            path='/OrganiserLogin' 
-            element={
-                      <OrganiserLogin 
-                      />
-                    }
-          />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+  if (render == 1)
+  {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route 
+              path='/' 
+              element={
+                        <Home 
+                        />
+                      }
+            />
+            <Route 
+              path='/GuestLogin' 
+              element={
+                        <GuestLogin 
+                        />
+                      }
+            />
+            <Route 
+              path='/OrganiserLogin' 
+              element={
+                        <OrganiserLogin 
+                        />
+                      }
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;

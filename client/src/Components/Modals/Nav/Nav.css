@@ -27,3 +27,17 @@ a {
 .link > a > h2:hover{
     color:brown;
 }
+
+.nav-btn {
+    background-color: transparent;
+    text-decoration: none;
+    border: none;
+
+    font-size:1rem;
+    font-family :'Times New Roman', Times, serif;
+    font-weight: 700;
+    margin:15px;
+    color:black;
+
+
+}

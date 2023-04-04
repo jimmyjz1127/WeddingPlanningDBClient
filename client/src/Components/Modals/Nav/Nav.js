@@ -9,7 +9,12 @@ import './Nav.css';
 
 function Nav(props) {
 
-    const {type} = props;
+    const {type, tab, setTab} = props;
+
+    const logout = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
 
 
     if (type == 0){
@@ -38,21 +43,25 @@ function Nav(props) {
         return (
             <div className='nav'>
                 <div className='link'>
-                    <Link to={'/'}>
-                        <h2>PERSONAL DETAILS</h2>
-                    </Link>
+                    <button className='nav-btn' onClick={() => setTab(0)}>
+                        PERSONAL DETAILS
+                    </button>
                 </div>
 
                 <div className='link'>
-                    <Link to={'/'}>
-                        <h2>PLACEHOLDER</h2>
-                    </Link>
+                    <button className='nav-btn' onClick={() => setTab(1)}>
+                        MANAGE PARTY
+                    </button>
                 </div>
 
                 <div className='link'>
-                    <Link>
-                        <h2>ABOUT</h2>
-                    </Link>
+                    <button className='nav-btn' onClick={() => setTab(2)}>
+                        ABOUT
+                    </button>
+                </div>
+
+                <div className='link'>
+                    <button className='nav-btn' onClick={() => logout()}>LOGOUT</button>
                 </div>
             </div>
         )

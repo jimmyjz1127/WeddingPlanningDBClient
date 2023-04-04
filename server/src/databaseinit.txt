@@ -63,6 +63,33 @@ BEGIN
 END $$
 DELIMITER;
 
+---------------------------- Views -------------------------------
+
+-- View view-awaiting-response as described in specifications
+CREATE VIEW view_awaiting_response AS 
+SELECT person.full_name, person.id, invitation.date_sent FROM person
+JOIN invitation ON person.invitation_code = invitation.code
+WHERE person.response IS NULL
+ORDER BY invitation.date_sent ASC, person.full_name ASC, person.id ASC; 
+
+-- Contains [Table Number, # of Standard Diet Guests] 
+-- for # of guests who have confirmed they are coming and have no dietary requirements 
+CREATE VIEW view_standard_dinner AS 
+SELECT person.table_no AS table_number, COUNT(*) AS num_standard_diet FROM person
+WHERE person.response=1 AND person.table_no IS NOT NULL 
+AND person.id NOT IN (
+    SELECT guest_diet.person_id FROM guest_diet
+)
+GROUP BY person.table_no ORDER BY table_number ASC;
+
+-- 
+CREATE VIEW view_special_diets AS 
+SELECT person.full_name, GROUP_CONCAT(dietary_requirement.short_name ORDER BY dietary_requirement.short_name ASC SEPARATOR ',')
+AS dietary_requirements FROM person 
+JOIN guest_diet ON person.id=guest_diet.person_id 
+JOIN dietary_requirement ON guest_diet.dietary_requirement_name=dietary_requirement.short_name
+GROUP BY person.id ORDER BY person.table_no ASC, person.full_name ASC;
+
 ---------------------------- Table DDL ------------------------------
 
 CREATE TABLE person(

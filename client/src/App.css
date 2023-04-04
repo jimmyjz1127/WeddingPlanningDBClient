@@ -1,5 +1,5 @@
 .App {
-  height :100vh;
+  height:100%;
   width:100vw;
 
   background-color: rgb(249, 242, 201);
@@ -40,7 +40,7 @@
 
 button:hover{
   cursor:pointer;
-  background-color: rgb(246, 219, 223);
+  color: purple;
 }
 
 button:active{
