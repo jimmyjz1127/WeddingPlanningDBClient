@@ -6,7 +6,7 @@ CREATE FUNCTION check_table_capacity(table_no INT) RETURNS BOOLEAN
 BEGIN 
     DECLARE capacity_count INT;
     DECLARE capacity_limit INT;
-    SELECT count(*) INTO capacity_count FROM person WHERE person.table_no = table_no;
+    SELECT COUNT(*) INTO capacity_count FROM person WHERE person.table_no = table_no;
     SELECT capacity INTO capacity_limit FROM dinner_table WHERE dinner_table.table_no = table_no;
     RETURN capacity_count < capacity_limit;
 END $$ 
@@ -15,27 +15,36 @@ DELIMITER;
 
 -- proc_add_person as described in specifications 
 DELIMITER $$
-CREATE PROCEDURE proc_add_person(IN full_name VARCHAR(200), IN notes VARCHAR(250), IN invitation_code VARCHAR(100), IN table_no INT)
+CREATE PROCEDURE proc_add_person(IN fullname VARCHAR(200), IN note VARCHAR(250), IN code VARCHAR(100), IN dinner_table_no INT)
 BEGIN 
     DECLARE invitation_count INT;
     DECLARE table_count INT;
     DECLARE table_capacity INT;
+    DECLARE capacity_count INT;
+    DECLARE max_table_no INT;
     
-    SELECT COUNT(*) INTO invitation_count FROM invitation WHERE invitation.code = invitation_code;
-    SELECT COUNT(*) INTO table_count FROM dinner_table WHERE dinner_table.table_no = table_no;
+    SELECT COUNT(*) INTO invitation_count FROM invitation WHERE invitation.code = code;
+    SELECT COUNT(*) INTO table_count FROM dinner_table WHERE dinner_table.table_no = dinner_table_no;
 
     IF invitation_count = 0 THEN 
-        INSERT INTO invitation VALUES(UUID(), NULL, NULL);
-    END IF 
+        INSERT INTO invitation VALUES(code, NULL, NULL);
+    END IF;
 
-    IF table_count = 0 THEN 
-        DECLARE max_table_no INT;
+    IF table_count = 0 OR NOT check_table_capacity(dinner_table_no) THEN 
         SELECT MAX(table_no) INTO max_table_no FROM dinner_table;
 
-        INSERT INTO dinner_table VALUES(max_table_no + 1, 1);
-    END IF 
+        INSERT INTO dinner_table(table_no, capacity) VALUES(max_table_no + 1, 1);
+        INSERT INTO person(full_name, response, notes, invitation_code, table_no) VALUES(fullname, NULL, note, code, max_table_no + 1);
+    ELSE 
+        INSERT INTO person(full_name, response, notes, invitation_code, table_no) VALUES(fullname, NULL, note, code, dinner_table_no);
+    END IF ;
+
 END $$ 
-DELIMITER;
+DELIMITER ; $$
+
+-- For testing -- 
+DROP PROCEDURE proc_add_person;
+CALL proc_add_person('Test Name', 'Some Notes', 'fjsdkf', 11);
 
 ---------------------------- Triggers -----------------------------
 
@@ -58,11 +67,47 @@ BEFORE INSERT ON person
 FOR EACH ROW 
 BEGIN 
     IF NOT check_table_capacity(NEW.table_no) THEN 
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid : table already at max capacity';
+        SET @msg = CONCAT('Invalid : table already at max capacity : ', NEW.table_no);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @msg;
     END IF;
 END $$
-DELIMITER;
+DELIMITER ; $$
 
+-- Trigger for checking table capacity when updating a guests table 
+DELIMITER $$
+CREATE TRIGGER table_capacity_trigger_update
+BEFORE UPDATE ON person
+FOR EACH ROW
+BEGIN 
+    IF NEW.table_no != OLD.table_no AND NOT check_table_capacity(NEW.table_no) THEN
+         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid : table already at max capacity';
+    END IF;
+END $$
+DELIMITER ; 
+
+-- Trigger for detecting if a new diet is being inserted into guest_diet - adds the new diet name to dietary_requirements table
+DELIMITER $$
+CREATE TRIGGER guest_diet_trigger_insert
+BEFORE INSERT ON guest_diet
+FOR EACH ROW 
+BEGIN   
+    IF (SELECT COUNT(*) FROM dietary_requirement WHERE short_name=NEW.dietary_requirement_name) = 0 THEN
+        INSERT INTO dietary_requirement VALUES(NEW.dietary_requirement_name, "");
+    END IF;
+END $$
+DELIMITER ; $$
+
+-- Trigger for detecting if a new diet is being updated in guest_diet - adds the new diet name to dietary_requirements table
+DELIMITER $$
+CREATE TRIGGER guest_diet_trigger_update
+BEFORE UPDATE ON guest_diet
+FOR EACH ROW 
+BEGIN   
+    IF (SELECT COUNT(*) FROM dietary_requirement WHERE short_name=NEW.dietary_requirement_name) = 0 THEN
+        INSERT INTO dietary_requirement VALUES(NEW.dietary_requirement_name, "");
+    END IF;
+END $$
+DELIMITER ; $$
 ---------------------------- Views -------------------------------
 
 -- View view-awaiting-response as described in specifications
@@ -113,7 +158,7 @@ CREATE TABLE organiser(
 
 CREATE TABLE invitation(
     code VARCHAR(100) NOT NULL,
-    address VARCHAR(200) NOT NULL,
+    address VARCHAR(200),
     date_sent DATE,
     PRIMARY KEY (code)
 );

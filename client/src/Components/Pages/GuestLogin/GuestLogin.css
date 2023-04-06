@@ -8,8 +8,11 @@
 }
 
 .guest-login-modal {
-    height:350px;
+    height:375px;
     width:max-content;
+
+    border:50px solid transparent;
+    border-image:url("./../../../Assets/flower-border.jpg") 60 repeat;
 
     background-color: rgb(188, 218, 228);
 
@@ -31,6 +34,10 @@
 
 .login-text{
     color:black;
+}
+
+.form-submit-btn {
+    
 }
 
 

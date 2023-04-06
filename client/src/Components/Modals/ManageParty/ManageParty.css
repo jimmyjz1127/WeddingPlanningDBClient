@@ -1,0 +1,142 @@
+.manage-party{
+    width:90%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding:10px;
+}
+
+
+/* --------- Party Member Styling --------- */
+
+.party-member{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-bottom:4px solid black;
+    padding-bottom:5px;
+
+    width:100%;
+}
+
+.party-member>h2 {
+    text-decoration: underline;
+    margin-bottom:0px;
+}
+
+.member-details{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width:100%;
+    margin-top:0px
+}
+
+.member-response {
+    /* margin-right: 10%; */
+}
+
+.member-response-grid {
+    display:grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap:10px;
+}
+
+.member-section-header{
+    margin-bottom:5px;
+}
+
+.checkbox-container{
+    display : flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.checkbox-container>input {
+    margin-left:5px;
+}
+
+
+.member-notes {
+    /* margin-right:1px; */
+}
+
+.member-notes-input {
+    min-width: 300px;
+    overflow-wrap: break-word;
+    font-family: 'Times New Roman', Times, serif;
+    padding:10px;
+}
+
+.member-buttons {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    margin-top:3%;
+}
+
+.member-save-btn{
+    background-color: transparent;
+    border:none;
+}
+
+.member-save-btn>img:hover{
+    transform: scale(1.15);
+}
+
+.member-save-btn > img {
+    max-width:20px;
+}
+
+/* ----- Diet input styling ----- */
+
+.member-diet {
+    /* margin-right:10%; */
+}
+
+.member-diet-grid {
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-rows: repeat(2, 1fr); */
+    grid-gap:10px 10px;
+
+}
+
+.member-diet> .member-section-header{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.add-diet-btn{
+    background-color: transparent;
+    margin-left:4px;
+    border:2px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    height:15px;
+    width:15px;
+    
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.add-diet-btn:hover {
+    background-color: white;
+}
+
+.new-diet-check {
+    margin-right:5px;
+}
+
+.new-diet-name-input {
+    font-size:12px;
+    max-width:80px;
+    margin-left:0px;
+}

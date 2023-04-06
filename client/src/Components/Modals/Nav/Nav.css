@@ -10,9 +10,6 @@
     align-items: center;
 }
 
-.welcome-msg{
-
-}
 
 a {
     text-decoration: none;
@@ -38,6 +35,8 @@ a {
     font-weight: 700;
     margin:15px;
     color:black;
+}
 
-
+.nav-btn:hover {
+    color:brown;
 }

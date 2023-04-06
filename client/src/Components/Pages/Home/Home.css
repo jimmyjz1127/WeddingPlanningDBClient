@@ -19,6 +19,15 @@
     align-items: center;
 }
 
+.welcome-msg{
+    margin-bottom:0px;
+}
+
+.flower{
+    margin-top:0px;
+    width : 200px;
+}
+
 .welcome-modal > h1 {
     font-size:3em;
     color:black;

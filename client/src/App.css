@@ -2,7 +2,7 @@
   height:100%;
   width:100vw;
 
-  background-color: rgb(249, 242, 201);
+  background-color: lavenderblush;
 
   font-family :'Times New Roman', Times, serif
 }
@@ -22,7 +22,8 @@
   text-decoration: none;
   border-radius: 5px;
   border:none;
-  background-color: lightpink;
+  background-color: purple;
+  color:white;
 
   padding:10px;
   margin:15px;
@@ -30,6 +31,10 @@
 
   font-weight:600;
   font-size:15px;
+}
+
+.form-submit-btn:hover {
+  border:1px solid white;
 }
 
 .form-error-msg{
@@ -40,7 +45,6 @@
 
 button:hover{
   cursor:pointer;
-  color: purple;
 }
 
 button:active{

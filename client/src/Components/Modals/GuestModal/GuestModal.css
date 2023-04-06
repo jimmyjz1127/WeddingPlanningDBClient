@@ -1,5 +1,5 @@
 .guest-modal {
-    height:750px;
+    min-height:750px;
     width:850px;
 
     border:40px solid transparent;
@@ -26,7 +26,7 @@ h1,h2,h3:hover{
 
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.5em;
-    color:black;
+    color : #745358;
     text-align: center;
 }
 
@@ -66,6 +66,9 @@ h1,h2,h3:hover{
     text-decoration: underline;
 }
 
+.personal-details-row>input,h3{
+    /* font-family: Arial, Helvetica, sans-serif; */
+}
 
 .date{
     font-size:1.5em;
@@ -73,8 +76,22 @@ h1,h2,h3:hover{
     font-weight: 500;
 }
 
+.diet-header{
+    margin-bottom:5px;
+}
+
+.error-msg{
+    color : red;
+    font-size:30px;
+    margin-top:0px;
+}
 
 /* ------ Check Box Styling ------ */
+
+.checkbox-wrapper > label{
+    font-size:1.25rem;
+}
+
 .check {
     transform:scale(175%);
 
@@ -91,7 +108,7 @@ h1,h2,h3:hover{
 
 .check:hover{
     cursor: pointer;
-    background-color:white;
+    background-color:rgb(231, 231, 231);
 }
 
 .check::before{
@@ -100,16 +117,17 @@ h1,h2,h3:hover{
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
-    width:10px;
-    height:10px;
     background-color: transparent;
-    transition: background-color 0.1s ease-in-out;
 }
 
-.check:checked::before{
+.check:checked{
+    display:inline-block;
     background-color: white;
-    outline:1px solid black;
     border-radius: 0px;
+}
+
+.rsvp-header{
+    margin-bottom:5px;
 }
 
 /* -------- Button Styling --------- */
@@ -118,15 +136,21 @@ h1,h2,h3:hover{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top:20px;
 }
 
 .form-btn {
-    font-family: 'Times New Roman', Times, serif;
+    font-family:Arial, Helvetica, sans-serif;
     background-color: beige;
     /* border-radius:5px; */
     border: 2px solid purple;
     margin:10px;
     font-size:1.5em;
+    font-weight:600;
     padding:5px 10px 5px 10px;
+}
+
+.form-btn:hover{
+    color:purple;
 }
 

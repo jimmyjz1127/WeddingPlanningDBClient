@@ -11,13 +11,13 @@ function Nav(props) {
 
     const {type, tab, setTab} = props;
 
+    // Logout button handler
     const logout = () => {
         localStorage.clear();
         window.location.reload();
     }
 
-
-    if (type == 0){
+    if (type == 0){ // Logged out nav bar
         return (
             <div className='nav'>
                 <div className='link'>
@@ -29,12 +29,6 @@ function Nav(props) {
                 <div className='link'>
                     <Link to={'/OrganiserLogin'}>
                         <h2>ORGANISER LOGIN</h2>
-                    </Link>
-                </div>
-
-                <div className='link'>
-                    <Link>
-                        <h2>ABOUT</h2>
                     </Link>
                 </div>
             </div>
@@ -53,13 +47,6 @@ function Nav(props) {
                         MANAGE PARTY
                     </button>
                 </div>
-
-                <div className='link'>
-                    <button className='nav-btn' onClick={() => setTab(2)}>
-                        ABOUT
-                    </button>
-                </div>
-
                 <div className='link'>
                     <button className='nav-btn' onClick={() => logout()}>LOGOUT</button>
                 </div>
@@ -69,21 +56,25 @@ function Nav(props) {
         return (
             <div className='nav'>
                 <div className='link'>
-                    <Link to={'/'}>
-                        <h2>PLACEHOLDER</h2>
-                    </Link>
+                    <button className='nav-btn' onClick={() => setTab(0)}>
+                        PERSONAL DETAILS
+                    </button>
                 </div>
 
                 <div className='link'>
-                    <Link to={'/'}>
-                        <h2>PLACEHOLDER</h2>
-                    </Link>
+                    <button className='nav-btn' onClick={() => setTab(1)}>
+                        MANAGE PARTY
+                    </button>
                 </div>
 
                 <div className='link'>
-                    <Link>
-                        <h2>ABOUT</h2>
-                    </Link>
+                    <button className='nav-btn' onClick={() => setTab(3)}>
+                        GUEST LIST
+                    </button>
+                </div>
+
+                <div className='link'>
+                    <button className='nav-btn' onClick={() => logout()}>LOGOUT</button>
                 </div>
             </div>
         )
