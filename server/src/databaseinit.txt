@@ -129,7 +129,7 @@ GROUP BY person.table_no ORDER BY table_number ASC;
 
 -- 
 CREATE VIEW view_special_diets AS 
-SELECT person.full_name, GROUP_CONCAT(dietary_requirement.short_name ORDER BY dietary_requirement.short_name ASC SEPARATOR ',')
+SELECT person.id, person.table_no, person.full_name, GROUP_CONCAT(dietary_requirement.short_name ORDER BY dietary_requirement.short_name ASC SEPARATOR ',')
 AS dietary_requirements FROM person 
 JOIN guest_diet ON person.id=guest_diet.person_id 
 JOIN dietary_requirement ON guest_diet.dietary_requirement_name=dietary_requirement.short_name

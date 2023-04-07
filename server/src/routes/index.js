@@ -245,4 +245,77 @@ router.post('/addnewguest', (req,res) => {
     }
 })
 
+// Route handler for updating diet description
+router.post('/updatediet', (req, res) => {
+    console.log('POST /updatediet');
+
+    try {
+        db.updateDiet(req.body, async(err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Failure udpating diet description")
+            } else {
+                res.status(200).send("Successfully update diet description");
+            }
+        } )
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+// Route for handling retrieval of all guests requiring special diets
+router.post('/getguestswithdiet', (req,res) => {
+    console.log('POST /getguestswithdiet');
+
+    try {
+        db.getGuestsWithDiet(req.body, async (err,result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Error retrieving guests with special diets");
+            } else {
+                res.status(200).json(result)
+            }
+        })
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+// Route for handling inserting a new dietary requirement into database
+router.post('/addnewdiet', (req,res) => {
+    console.log('POST /addnewdiet');
+
+    try {
+        db.addNewDiet(req.body, async (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Error adding new diet");
+            } else {
+                res.status(200).send("Success adding new diet")
+            }
+        })
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
+// Route for handling retrieving number of guests with standard diet for all dinner tables 
+router.post('/getstandardtables' , (req,res) => {
+    console.log('POST /getstandardtables');
+
+    try {
+        db.getStandardDietTables(req.body, async (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            } else {
+                res.status(200).json(result);
+            }
+        })
+    } catch (err) {
+        console.log(err);
+    }
+})
+
 module.exports = router;

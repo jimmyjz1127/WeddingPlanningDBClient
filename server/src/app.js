@@ -11,7 +11,6 @@ const {server_port, client_port, host_server_url, host_client_url} = require('./
 
 // Routers
 const indexRouter = require("./routes/index");
-// const { allowedNodeEnvironmentFlags } = require('process');
 const { urlencoded } = require("express");
 
 // Set up router

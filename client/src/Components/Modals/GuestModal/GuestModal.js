@@ -16,6 +16,8 @@ import "./GuestModal.css";
 import GuestDetails from './../GuestDetails/GuestDetails';
 import ManageParty from "../ManageParty/ManageParty";
 import ManageGuests from "../ManageGuests/ManageGuests";
+import ManageDiet from "../ManageDiet/ManageDiet";
+import Tables from "../Tables/Tables";
 
 // Config 
 import {full_url, port} from './../../../Config';
@@ -35,6 +37,12 @@ function GuestModal(props) {
             )}
             {tab == 3 && loginState == 2 && 
                 <ManageGuests allDiet={allDiet} setAllDiet={setAllDiet}/>
+            }
+            { tab == 4 && loginState == 2 &&
+                <ManageDiet allDiet={allDiet} setAllDiet={setAllDiet}/>
+            }
+            { tab == 5 && loginState == 2 &&
+                <Tables/>
             }
         </div>
     );

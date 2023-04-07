@@ -119,21 +119,47 @@
     margin-bottom:5px;
     border-radius: 3px;;
 }
+/* ---------- Filter Drop Down ---------- */
+.filter-wrapper {
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    border-bottom:2px solid black;
+    padding-bottom: 15px;
+}
+
+.filter-select {
+    padding:10px;
+    font-size:1em;
+}
 
 /* ----- Guest Item Styling ------ */
 
 .guest-item {
     width:100%;
+    padding-bottom:5%;
     border-bottom:1px solid black;
 
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.guest-name{
+    text-decoration: underline;
+    margin-bottom:0px;
 }
 
 .table-wrapper {
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    margin-right: 45%;
+}
+
+.table-wrapper > h3 {
+    margin-bottom:2px;
 }
 
 .table-input {
@@ -151,15 +177,24 @@
     border : 1px solid black;
 }
 
+.table-wrapper > .edit-header-container > img {
+    margin-top:0px;
+}
+
 .manage-guest-btn {
     background-color: transparent;
-    border: 1px solid black;
     padding : 10px;
     font-family:Arial, Helvetica, sans-serif;
     font-size:1.2em;
     font-weight:600;
     height:fit-content;
     margin:auto;
+    border:none;
+}
+
+.manage-guest-btn > img {
+    border:none;
+    height:30px;
 }
 
 .manage-guest-btn:hover{
@@ -209,4 +244,36 @@
 
 .delete-confirm-btn:hover{
     background-color: white;
+}
+
+
+.guest-response-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-right:25%;
+}
+
+.guest-response-wrapper > h3 {
+    margin-bottom:3px;
+}
+
+.response-text {
+    font-size:1.25em;
+}
+
+.guest-item-diet > h3 {
+    margin-bottom:5px;
+}
+
+.guest-diet-label {
+    margin:0px;
+}
+
+.guest-details-btn-wrapper {
+    display:flex;
+    flex-direction: row;
+
+    width:10em;
 }

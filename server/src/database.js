@@ -358,6 +358,83 @@ const addNewGuest = async (body, callback) => {
     })
 }
 
+/**
+ * Updates diet description
+ * @param {*} body 
+ * @param {*} callback 
+ */
+const updateDiet = async (body, callback) => {
+    const {short_name, description} = body;
+
+    let query = 'UPDATE dietary_requirement SET description=(?) WHERE short_name=(?)'
+
+    pool.query(query, [description, short_name], (err, res) => {
+        if (err) {
+            console.log(err);
+            callback('Error updating diet for : ' + short_name);
+        } else {
+            callback(null, "Success");
+        }
+    })
+}
+
+/**
+ * Retrieves all guests with special diet requiremetn from view_special_diets
+ * @param {*} body 
+ * @param {*} callback 
+ */
+const getGuestsWithDiet = async (body, callback) => {
+    let query = 'SELECT * FROM view_special_diets';
+
+    pool.query(query, [], (err,res) => {
+        if (err) {
+            console.log(err);
+            callback('Error getting guests with special diets', null);
+        } else {
+            callback(null, eval(JSON.stringify(res)))
+        }
+    })
+}
+
+/**
+ * Adds a new diet to database in table dietary_requirement
+ * @param {*} body 
+ * @param {*} callback 
+ */
+const addNewDiet = async (body, callback) => {
+    const {short_name, description} = body;
+
+    let query = 'INSERT INTO dietary_requirement VALUES((?), (?))';
+
+    pool.query(query, [short_name, description], (err,res) => {
+        if (err) {
+            console.log(err);
+            callback("Faliure inserting new diet for " + short_name);
+        } else {
+            callback(null, "Success adding new diet")
+        }
+    })
+}
+
+/**
+ * Retrieves all data from view_standard_dinner
+ * @param {*} body 
+ * @param {*} callback 
+ */
+const getStandardDietTables = async (body, callback) => {
+    let query = 'SELECT view_standard_dinner.*, dinner_table.capacity FROM view_standard_dinner ' + 
+                'INNER JOIN dinner_table ON dinner_table.table_no=view_standard_dinner.table_number';
+
+    pool.query(query, [], (err,res) => {
+        if (err) {
+            console.log(err);
+            callback('Failure retrieving standard diet tables');
+        } else {
+            callback(null, eval(JSON.stringify(res)));
+        }
+    })
+}
+
 
 module.exports = {
     validateOrganiser,
@@ -373,5 +450,9 @@ module.exports = {
     deleteGuest,
     changeTable,
     addNewGuest,
-    getAllDietInfo
+    getAllDietInfo,
+    updateDiet,
+    getGuestsWithDiet,
+    addNewDiet,
+    getStandardDietTables
 }

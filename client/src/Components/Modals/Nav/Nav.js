@@ -74,6 +74,18 @@ function Nav(props) {
                 </div>
 
                 <div className='link'>
+                    <button className='nav-btn' onClick={() => setTab(4)}>
+                        MANAGE DIET
+                    </button>
+                </div>
+
+                <div className='link'>
+                    <button className='nav-btn' onClick={() => setTab(5)}>
+                        TABLES
+                    </button>
+                </div>
+
+                <div className='link'>
                     <button className='nav-btn' onClick={() => logout()}>LOGOUT</button>
                 </div>
             </div>

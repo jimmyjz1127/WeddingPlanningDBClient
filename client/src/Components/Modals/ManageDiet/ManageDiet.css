@@ -1,0 +1,126 @@
+.manage-diet{
+    height:fit-content;
+    width:90%;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top:20px;
+    padding-bottom:20px;
+}
+
+/* ----------- Diet Item styling -------------- */
+
+.diet-obj {
+    width:100%;
+    margin-top:5px;
+    margin-bottom:5px;
+
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    border-bottom : 2px solid black;
+    padding-bottom:10px;
+    padding-top: 10px;
+}
+
+.diet-input {
+    border:none;
+    padding:10px;
+    background-color: lavenderblush;
+
+    font-size:1.25em;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.diet-input-area {
+    font-size: 1em;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: lavenderblush;
+    width:150%;
+}
+
+.diet-member-btns {
+    margin-left:90%;
+}
+
+.diet-delete-btn {
+    background-color: transparent;
+    border:none;
+    margin-left:0px;
+}
+
+.diet-delete-btn > img {
+    height:25px;
+}
+
+/* ----------- Add Diet Styling ------------ */
+.add-new-diet-wrapper {
+    margin-top:10px;
+
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    width:100%;
+}
+
+.add-new-diet-input {
+    max-width:60%;
+    font-size:1.2em;
+    height :fit-content;
+    font-family: 'Times New Roman', Times, serif;
+    padding:20px 10px 20px 10px;
+    margin-top:10px;
+
+    background-color: lavenderblush;
+}
+
+.add-new-diet-area {
+    max-width:100%;
+    font-size:1em;
+    font-family: 'Times New Roman', Times, serif;
+    padding:10px;
+
+    background-color: lavenderblush;
+}
+
+.diet-submit-btn {
+    padding:10px;
+    max-width:150px;
+    max-height:50px;
+    margin-top:20px;
+    margin-left:50px;
+
+    background-color: beige;
+    font-size:1.2em;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.diet-submit-btn:hover{
+    border : 3px solid black;
+}
+
+.manage-diet>.error-msg {
+    margin-top:5px;
+}
+
+
+.confirmation-wrapper {
+    margin-left:50px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.confirmation-wrapper > h3 {
+    margin-top:0px;
+    margin-bottom:2px;
+}
+
+.confirmation-btn {
+    background-color: transparent;
+    width:4em;
+    font-size:1em;
+}
+
+

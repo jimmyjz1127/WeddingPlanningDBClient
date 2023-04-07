@@ -32,6 +32,8 @@ function ManageGuests(props) {
     const [notes, setNotes] = useState("");
     const date = new Date();
 
+    const [filter, setFilter] = useState(0); // 0 : default, 1 : No response, 2 : Dietary Requirements
+
     // Retrieves all data for all guests of the wedding
     const getAllGuests = async () => {
         try {
@@ -46,6 +48,22 @@ function ManageGuests(props) {
             return data;
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    // Retrieves all guests with special diet
+    const getGuestsWithDiet = async () => {
+        try {
+            const res = await Axios({
+                method:'POST',
+                withCredentials:true,
+                url:full_url+'/getguestswithdiet'
+            })
+
+            let data = res.data;
+            return data;
+        } catch (err) {
+
         }
     }
 
@@ -84,14 +102,29 @@ function ManageGuests(props) {
             }
         }
     }
+
+    // Handler for changing filter
+    const handleFilterChange = async (value) => {
+        setFilter(value);
+
+        if (value == 2) {
+            setCanRender(0);
+            await setGuests(await getGuestsWithDiet());
+            setCanRender(1); 
+        } else {
+            setCanRender(0);
+            await setGuests(await getAllGuests());
+            setCanRender(1); 
+        }    
+    }
     
     useLayoutEffect(() => {
         const initiateGuests = async () => {
-            setGuests(await getAllGuests());
+            await setGuests(await getAllGuests());  
+            setCanRender(1);     
         }
-
         initiateGuests();
-        setCanRender(1);
+        
     }, [])
 
     if (canRender == 1) {
@@ -149,11 +182,24 @@ function ManageGuests(props) {
                         </div>
                     }
                 </div>
+                <div className="filter-wrapper">
+                    <select className="filter-select" onChange={(e) => handleFilterChange(e.target.value)}>
+                        <option value={0}>All Guests</option>
+                        <option value={1}>Awaiting Response</option>
+                        <option value={2}>Special Diet</option>
+                    </select>
+                </div>
                 {
                     guests.map((guest, index) => {
-                        return (
-                            <GuestItem guest={guest} key={index}/>
-                        )
+                        if (filter==0 || filter ==2){
+                            return (
+                                <GuestItem guest={guest} key={index} filter={filter}/>
+                            )
+                        } else if (filter == 1 && guest.response != 1 && guest.response != 0) {
+                            return (
+                                <GuestItem guest={guest} key={index} filter={filter}/>
+                            )
+                        } 
                     })
                 }
             </div>
