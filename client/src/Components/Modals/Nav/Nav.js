@@ -81,7 +81,7 @@ function Nav(props) {
 
                 <div className='link'>
                     <button className='nav-btn' onClick={() => setTab(5)}>
-                        TABLES
+                        CHEF INFO
                     </button>
                 </div>
 

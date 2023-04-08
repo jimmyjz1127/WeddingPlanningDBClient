@@ -43,7 +43,7 @@
         5. routes/index.js  : contain all route handler functions 
 
 ## Database Data Population
-### These are the statments I ran to load the given data into each database table
+### These are the statements I ran to load the given data into each database table
 
     1. Invitation Data
         LOAD DATA LOCAL INFILE './server/Invitation_Data.csv' INTO TABLE invitation FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' (code, address, date_sent);

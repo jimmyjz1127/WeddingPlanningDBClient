@@ -118,7 +118,11 @@ function GuestItem(props){
                             <div className="delete-confirm">
                                 <h3>Are you sure?</h3>
                                 <div className="delete-confirm-wrapper">
-                                    <button className="delete-confirm-btn" onClick={()=>deleteGuest()}>
+                                    <button className="delete-confirm-btn" onClick={()=>{
+                                                                                            deleteGuest();
+                                                                                            setDeleteMsg(0);
+                                                                                        }
+                                    }>
                                         Yes
                                     </button>
 
