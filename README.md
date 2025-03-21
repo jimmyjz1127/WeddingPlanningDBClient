@@ -1,5 +1,5 @@
-# CS3101 Deliverable 2 : Wedding Planning Database 
-## Author : 190015412 
+# Wedding Planning Database & Client
+## Author : Jimmy Zhang (jimmyjz1127)
 
 ## Usage 
     Note : this application uses Express.JS server and React.JS frontend.
@@ -60,7 +60,7 @@
     5. Guest Diet Data
         LOAD DATA LOCAL INFILE './server/GuestDiet_Data.csv' INTO TABLE guest_diet FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' (person_id, dietary_requirement_name);
 
-## For Remote Development (for myself not for grader)
+## For Remote Development 
     1. Run the following in terminal (setup SOCKS proxy)
         ssh -D 8123 -f -C -q -N jz75@jz75.host.cs.st-andrews.ac.uk
 
